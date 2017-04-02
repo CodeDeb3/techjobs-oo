@@ -1,5 +1,6 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.Job;
 import org.launchcode.models.forms.JobForm;
 import org.launchcode.models.data.JobData;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class JobController {
     public String index(Model model, int id) {
 
         // TODO #1 - get the Job with the given ID and pass it into the view
-
+        model.addAttribute("jobs", jobData.findById(id));
         return "job-detail";
     }
 
@@ -35,13 +36,25 @@ public class JobController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String add(Model model, @Valid JobForm jobForm, Errors errors) {
+    public String add(Model model, @Valid JobForm jobForm, Errors errors, Job newJob) {
 
         // TODO #6 - Validate the JobForm model, and if valid, create a
         // new Job and add it to the jobData data store. Then
         // redirect to the job detail view for the new Job.
 
-        return "";
+        if (errors.hasErrors()) {
+            return "new-job";
+        }
+
+        // add job to jobData and id to newJob
+
+        jobData.add(newJob);
+//        System.out.println(newJob);
+        model.addAttribute("id", newJob.getId());
+        model.addAttribute("title", "Values");
+
+        return "redirect:/job";
 
     }
+
 }
