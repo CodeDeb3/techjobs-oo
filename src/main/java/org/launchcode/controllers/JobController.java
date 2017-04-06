@@ -1,6 +1,6 @@
 package org.launchcode.controllers;
 
-import org.launchcode.models.Job;
+import org.launchcode.models.*;
 import org.launchcode.models.forms.JobForm;
 import org.launchcode.models.data.JobData;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,8 @@ public class JobController {
     public String index(Model model, int id) {
 
         // TODO #1 - get the Job with the given ID and pass it into the view
-        model.addAttribute("jobs", jobData.findById(id));
+        model.addAttribute("job", jobData.findById(id));
+
         return "job-detail";
     }
 
@@ -35,8 +36,9 @@ public class JobController {
         return "new-job";
     }
 
+
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String add(Model model, @Valid JobForm jobForm, Errors errors, Job newJob) {
+    public String add(Model model, @Valid JobForm jobForm, Errors errors) {
 
         // TODO #6 - Validate the JobForm model, and if valid, create a
         // new Job and add it to the jobData data store. Then
@@ -46,14 +48,23 @@ public class JobController {
             return "new-job";
         }
 
-        // add job to jobData and id to newJob
+        // create job form
+        String name = jobForm.getName();
+        Employer employer = jobData.getEmployers().findById(jobForm.getEmployerId());
+        Location location = jobData.getLocations().findById(jobForm.getLocationId());
+        PositionType position = jobData.getPositionTypes().findById(jobForm.getPositionTypeId());
+        CoreCompetency skill = jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId());
 
+        Job newJob = new Job(name,employer, location,position, skill);
+
+//                jobForm.getEmployer(),jobForm.getLocation(),
+//                jobForm.getPositionType(),jobForm.getCoreCompetency());
+
+        // add job to jobData
         jobData.add(newJob);
-//        System.out.println(newJob);
-        model.addAttribute("id", newJob.getId());
-        model.addAttribute("title", "Values");
 
-        return "redirect:/job";
+
+        return "redirect:?id=" + newJob.getId();
 
     }
 
