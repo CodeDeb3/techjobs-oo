@@ -1,13 +1,9 @@
 package org.launchcode.models.forms;
 
-import org.launchcode.models.CoreCompetency;
-import org.launchcode.models.Employer;
-import org.launchcode.models.Location;
-import org.launchcode.models.PositionType;
+import org.launchcode.models.*;
 import org.launchcode.models.data.JobData;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 
@@ -24,7 +20,7 @@ public class JobForm {
     private int employerId;
 
     /*
-        TODO #3 - Included other fields needed to create a job,
+        TODO #3 - DONE Included other fields needed to create a job,
         with correct validation attributes and display names.
         Don't forget to add getters and setters
      */
@@ -36,7 +32,7 @@ public class JobForm {
     @NotNull
     private int coreCompetencyId;
 
-    @Null
+    @NotNull
     private int positionTypeId;
 
 
@@ -77,26 +73,10 @@ public class JobForm {
     }
 
 
-    public ArrayList<Employer> getEmployers() {
-        return employers;
-    }
-
-    public void setEmployers(ArrayList<Employer> employers) {
-        this.employers = employers;
-    }
-
     public int getLocationId() { return locationId;
     }
 
     public void setLocationId(int locationId) {  this.locationId = locationId;
-    }
-
-    public ArrayList<Location> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(ArrayList<Location> locations) {
-        this.locations = locations;
     }
 
     public int getCoreCompetencyId() {
@@ -114,6 +94,25 @@ public class JobForm {
     public void setPositionTypeId(int positionTypeId) {
         this.positionTypeId = positionTypeId;
     }
+
+
+
+    public ArrayList<Employer> getEmployers() {
+        return employers;
+    }
+
+    public void setEmployers(ArrayList<Employer> employers) {
+        this.employers = employers;
+    }
+
+    public ArrayList<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(ArrayList<Location> locations) {
+        this.locations = locations;
+    }
+
 
     public ArrayList<CoreCompetency> getCoreCompetencies() {
         return coreCompetencies;
